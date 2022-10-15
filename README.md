@@ -29,8 +29,8 @@ The following **additional** features are implemented:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-https://submissions.us-east-1.linodeobjects.com/and102/0G5rgAcG.gif
-<img src="https://i.imgur.com/wQLxHJf.gif" title='Video Walkthrough' width='' alt='[Video Walkthrough](https://i.imgur.com/wQLxHJf.gif)' />
+https://i.imgur.com/wQLxHJf.gif
+<img src="https://i.imgur.com/wQLxHJf.gif" title='Video Walkthrough' width='' alt='https://i.imgur.com/wQLxHJf.gif' />
 
 Made with EZGif
 
