@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var foods: MutableList<Food>
+    lateinit var foods: MutableList<DisplayFood>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         foods = ListFetcher.GetFoodList()
 
         val listRv = findViewById<RecyclerView>(R.id.listRv)
-        val adapter =ItemAdapter(foods)
+        val adapter = ItemAdapter(foods)
         listRv.adapter = adapter
         listRv.layoutManager = LinearLayoutManager(this)
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                     val foodName = data.extras!!.getString("food name")
                     val calorieCount = data.extras!!.getString("calorie count")
 
-                    var newFood = Food(foodName.toString(),calorieCount.toString())
+                    var newFood = DisplayFood(foodName.toString(),calorieCount.toString())
                     foods.add(newFood)
 
                     lifecycleScope.launch(IO)
@@ -55,14 +55,29 @@ class MainActivity : AppCompatActivity() {
                         (application as FoodApplication).db.foodDao().deleteAll()
                         (application as FoodApplication).db.foodDao().insertAll(foods.map {
                             FoodEntity(
-                                foodName = it.name,
-                                calorieCount = it.calories
+                                foodName = it.foodName.toString(),
+                                calorieCount = it.calorieCount.toString()
                             )
                         })
                     }
-                    adapter.notifyDataSetChanged()
+                    //adapter.notifyDataSetChanged()
                 }
 
+            }
+        }
+
+        lifecycleScope.launch {
+            (application as FoodApplication).db.foodDao().getAll().collect { databaseList ->
+                databaseList.map { entity ->
+                    DisplayFood(
+                        entity.foodName,
+                        entity.calorieCount
+                    )
+                }.also { mappedList ->
+                    foods.clear()
+                    foods.addAll(mappedList)
+                    adapter.notifyDataSetChanged()
+                }
             }
         }
 

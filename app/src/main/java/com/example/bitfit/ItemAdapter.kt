@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemAdapter (private val foods:List<Food>): RecyclerView.Adapter<ItemAdapter.ViewHolder>(){
+class ItemAdapter (private val foods:List<DisplayFood>): RecyclerView.Adapter<ItemAdapter.ViewHolder>(){
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         val nameTextView: TextView
@@ -29,8 +29,8 @@ class ItemAdapter (private val foods:List<Food>): RecyclerView.Adapter<ItemAdapt
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val food = foods[position]
 
-        holder.nameTextView.text = food.name
-        holder.calorieTextView.text = food.calories
+        holder.nameTextView.text = food.foodName
+        holder.calorieTextView.text = food.calorieCount
     }
 
     override fun getItemCount(): Int {
