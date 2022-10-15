@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BitFit</string>
+    <string name="addFoodButtonText">Add New Food</string>
+    <string name="food_default">Everything Bagel</string>
+    <string name="calorie_default">290</string>
+    <string name="record_food_button_text">Record This Food</string>
 </resources>
