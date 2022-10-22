@@ -13,8 +13,8 @@ The following **required** functionality is completed:
 - [x] **At least one health metric is tracked (based on user input)**
   - Chosen metric(s): `Food and Calories`
 - [x] **There is a "create entry" UI that prompts users to make their daily entry**
-- [ ] **New entries are saved in a database and then updated in the RecyclerView**
-- [ ] **On application restart, previously entered entries are preserved (i.e., are *persistent*)**
+- [x] **New entries are saved in a database and then updated in the RecyclerView**
+- [x] **On application restart, previously entered entries are preserved (i.e., are *persistent*)**
  
 The following **optional** features are implemented:
 
@@ -29,9 +29,8 @@ The following **additional** features are implemented:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-
-https://i.imgur.com/3Ph87uA.mp4
-<img src='https://i.imgur.com/MtatmJL.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+https://i.imgur.com/wQLxHJf.gif
+<img src="https://i.imgur.com/wQLxHJf.gif" title='Video Walkthrough' width='' alt='https://i.imgur.com/wQLxHJf.gif' />
 
 Made with EZGif
 
