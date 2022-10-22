@@ -12,9 +12,11 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
@@ -22,68 +24,39 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var foods: MutableList<DisplayFood>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val addFoodButton = findViewById<Button>(R.id.addFoodButton)
+        val fragmentManager = supportFragmentManager
+        val foodLogFragment: Fragment = FoodLogFragment()
+        val dashboardFragment: Fragment = DashboardFragment()
+
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            lateinit var fragment: Fragment
+            when(item.itemId)
+            {
+                R.id.log -> fragment = foodLogFragment
+                R.id.dashboard -> fragment = dashboardFragment
+            }
+            replaceFragment(fragment)
+            true
+        }
+        bottomNavigationView.selectedItemId = R.id.log
 
         foods = ListFetcher.GetFoodList()
-
-        val listRv = findViewById<RecyclerView>(R.id.listRv)
-        val adapter = ItemAdapter(foods)
-        listRv.adapter = adapter
-        listRv.layoutManager = LinearLayoutManager(this)
-
-        val startForResult:ActivityResultLauncher<Intent> = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == Activity.RESULT_OK)
-            {
-                val data = result.data
-                if (data != null)
-                {
-                    val foodName = data.extras!!.getString("food name")
-                    val calorieCount = data.extras!!.getString("calorie count")
-
-                    var newFood = DisplayFood(foodName.toString(),calorieCount.toString())
-                    foods.add(newFood)
-
-                    lifecycleScope.launch(IO)
-                    {
-                        (application as FoodApplication).db.foodDao().deleteAll()
-                        (application as FoodApplication).db.foodDao().insertAll(foods.map {
-                            FoodEntity(
-                                foodName = it.foodName.toString(),
-                                calorieCount = it.calorieCount.toString()
-                            )
-                        })
-                    }
-                    //adapter.notifyDataSetChanged()
-                }
-
-            }
-        }
-
-        lifecycleScope.launch {
-            (application as FoodApplication).db.foodDao().getAll().collect { databaseList ->
-                databaseList.map { entity ->
-                    DisplayFood(
-                        entity.foodName,
-                        entity.calorieCount
-                    )
-                }.also { mappedList ->
-                    foods.clear()
-                    foods.addAll(mappedList)
-                    adapter.notifyDataSetChanged()
-                }
-            }
-        }
-
-        addFoodButton.setOnClickListener(){
-            val intent = Intent(this,AddFoodActivity::class.java)
-            startForResult.launch(intent)
-        }
+//
+//        val listRv = findViewById<RecyclerView>(R.id.listRv)
+//        val adapter = ItemAdapter(foods)
+//        listRv.adapter = adapter
+//        listRv.layoutManager = LinearLayoutManager(this)
+    }
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.food_frame_layout, fragment)
+        fragmentTransaction.commit()
     }
 }

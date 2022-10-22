@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="@string/log_icon_name"
+        android:id="@+id/log"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_list_24"
+        />
+    <item
+        android:title="@string/dashboard_icon_name"
+        android:id="@+id/dashboard"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_leaderboard_24"
+        />
+</menu>

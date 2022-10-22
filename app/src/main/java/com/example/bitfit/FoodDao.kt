@@ -11,7 +11,7 @@ interface FoodDao {
     fun getAll(): Flow<List<FoodEntity>>
 
     @Insert
-    fun insertAll(foods: List<FoodEntity>) 
+    fun insertAll(foods: List<FoodEntity>)
 
     @Query("DELETE FROM food_table")
     fun deleteAll()
